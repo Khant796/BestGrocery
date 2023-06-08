@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/adminproduct.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+	<div class="col-2">
+		<nav class="navbar">
+			<div>
+				<h3 class="navbar-brand">Admin</h3>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/adminproduct}">Products</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/admincat}">Categories</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/admintype}">Category Type</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link">Orders</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<div class="col-10">
+		<h3>Order</h3>
+		<p th:text="${'Customer Name: '+order.getOrderAddress().getFirstName()+','+order.getOrderAddress().getLastName()}"></p>
+		<div class="list-group">
+			<div class="list-group-item d-flex" >
+				<p class="justify-content-start" ></p>
+				<p class="justify-content-end" ></p>
+			</div>
+		</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Product Name</th>
+						<th>Amount</th>
+						<th>Item total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="product : ${order.getProducts()}">
+						<td th:text="${product.getProduct().getName()}"></td>
+						<td th:text="${product.getAmount()}"> </td>
+						<td th:text="${product.getCost()}"> </td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="d-flex justify-content-end">
+				<p th:text="|'Total : ${total}'|"></p>
+			</div>
+			
+			<a class="btn bg-dark text-light" th:if="${order.get}" th:href="@{${'/admin/deliver/'+order.getId()}}">Deliver</a>
+	</div>
+</div>
+</div>
+
+</body>
+</html>

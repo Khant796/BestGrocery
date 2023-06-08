@@ -1,0 +1,19 @@
+@charset "ISO-8859-1";
+
+.navbar{
+	position:fixed;
+	display: grid;
+	grid-auto-flow: row;
+}
+
+.nav-link{
+	color: black;
+}
+
+.nav-item{
+	margin-bottom: 20px;
+}
+
+table{
+	width: 400px;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/font-awesome.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/home.css}" rel="stylesheet">
+</head>
+<body>
+
+<nav th:replace="~{fragments/homefrag :: nav}">
+			
+		</nav>
+		<div class="container-fluid">
+			<a th:href="@{/orderform}" th:if="${products.size()} > 0" class="btn bg-dark text-light">Check Out</a>
+			<ul class="list-group">
+				<li class="list-group-item" th:each="product, iter : ${products}">
+					<div class="row">
+						<span class="col-2">
+							<img th:src="@{${'/resources/images/'+product.image}}">
+						</span>
+						<div class="col-7">
+							<div class="justify-content-between align-items-center d-flex" style="height: 100%">
+							<p th:text="${product.productName}"></p>
+							<form th:action="@{/update}" method="post" th:id="${'form'+iter.index}">
+							<div class="d-flex">
+								<button type="button" th:attr="data-id=${iter.index}" class="btn" onclick="decrease(this)">
+								<i class="fa fa-minus"></i>
+							</button>
+							<div class="form-group">
+								<input type="text" style="display: none" th:value="${product.pof.productId}" name="id">
+									<input type="number" th:id="${iter.index}" onchange="checkInputValue(this)" th:attr="data-id=${iter.index}" class="form-control original" th:value="${product.amount}" name="amount">
+							</div>
+							<button type="button" th:attr="data-id=${iter.index}" class="btn"  onclick="increase(this)">
+								<i class="fa fa-plus"></i>
+							</button>
+							</div>
+							
+							</form>
+							<p th:text="${product.cost}" class="cost" th:id="${'cost'+iter.index}" th:value="${product.cost}"></p>
+							<a class="btn bg-dark text-light" th:href="@{${'/remove/'+product.productName}}">Remove</a>
+							<button class="btn bg-dark text-light but" onclick="submit(this)" th:attr="data-id=${iter.index}"  th:id="${'submit'+iter.index}">Update</button>
+						</div>
+						</div>
+						
+					</div>
+				</li> 
+			</ul>
+			
+		</div>
+		<script type="text/javascript">
+        let original = [];
+        let price = [];
+        let values = [];
+        
+        window.onload = function(){
+            let or = document.querySelectorAll(".original");
+            for(let j = 0; j < or.length; j++){
+                original.push(or[j].value);
+            }
+            console.log(original);
+
+            let cost = document.querySelectorAll(".cost");
+            for(let i = 0; i < cost.length; i++){
+                let submit = document.getElementById("submit"+i);
+                submit.style.display = "none";
+                values.push(parseInt(cost[i].textContent));
+            }
+            for(let x = 0; x < cost.length; x++){
+                price.push(values[x] / original[x]);
+            }
+         	
+            console.log(values);
+            console.log(price);
+            
+        }
+        function decrease(element) {
+            let id = element.dataset.id;
+            let input = document.getElementById(id);
+            let val = input.value;
+            val--;
+            document.getElementById(id).value = val;
+            checkInputValue(input);
+        }
+
+        function increase(element) {
+            let id = element.dataset.id;
+            let input = document.getElementById(id);
+            let val = input.value;
+            val++;
+            document.getElementById(id).value = val;
+            checkInputValue(input);
+        }
+        function checkInputValue(element) {
+            var inputValue = element;
+            var id = inputValue.dataset.id;
+            var submitButton = document.getElementById("submit"+id);
+  
+            
+            console.log(id);
+            
+            if (inputValue.value < 0 || inputValue.value == original[id]) {
+              submitButton.style.display = "none";
+            } else {
+              submitButton.style.display = "inline-block";
+              let c = document.getElementById("cost"+id);  
+              c.innerHTML = price[id] * inputValue.value;
+            }
+          }
+        function submit(element){
+           let id = element.dataset.id;
+           let form = document.getElementById("form"+id);
+           form.submit();
+        }
+    </script>
+</body>
+</html>

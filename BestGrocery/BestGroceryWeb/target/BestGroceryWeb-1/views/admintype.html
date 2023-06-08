@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/adminproduct.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+	<div class="col-2">
+		<nav class="navbar">
+				<p class="navbar-brand">Admin</p>
+
+			<ul class="nav navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/adminproduct}">Products</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/admincat}">Categories</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/admintype}">Category Type</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link">Orders</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<div class="col-10">
+		<h3>Products</h3>
+		<div class="butbox">
+			<a class="btn bg-dark text-light">Add Category Type</a>
+			<a class="btn bg-dark text-light">Remove Category Type</a>
+			<a class="btn bg-dark text-light">Update Category Type</a>
+		</div>
+		<table class="table table-striped"> 
+			<thead>
+				<tr>
+					<th>Category Type</th>
+					<th>Number of Categories</th>
+					<th>Category Type Revenue</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="type, iter : ${types}">
+					<td th:text="${type.getName()}"></td>
+					<td th:text="${type.getCategories().size()}"></td>
+					<td th:text="${revenues[iter.index]}"></td>
+					
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		</div>
+		</div>
+</body>
+</html>

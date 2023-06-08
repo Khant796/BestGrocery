@@ -1,0 +1,14 @@
+@charset "ISO-8859-1";
+
+.brand{
+font-size: 40px;	
+}
+
+.nav-link{
+	font-size: 20px;
+	color: black;
+}
+
+.obox {
+margin-left: 30px;	
+}

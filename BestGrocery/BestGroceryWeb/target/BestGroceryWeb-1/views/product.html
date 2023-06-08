@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/font-awesome.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/home.css}" rel="stylesheet">
+</head>
+<body>
+
+	<nav th:replace="~{fragments/homefrag :: nav}">
+		</nav>
+	<div class="container-fluid">
+		<div class="d-flex justify-content-center align-items-center"  style="height: 85vh">
+			<div class="row">
+				<div class="col-6">
+					<img th:src="@{${'/resources/images/'+product.getImage()}}">
+				</div>
+				<div class="col-6">
+					<h5 th:text="${'Product Name: '+product.getName()}"></h5>
+					<p th:text="${'Product Price: '+product.getPrice()}"></p>
+					<form th:action="@{/addcart}" method="post" th:object="${form}">
+						<div class="d-flex">
+
+							<button type="button" class="btn" onclick="decrease()">
+								<i class="fa fa-minus"></i>
+							</button>
+							<input type="text" style="display: none" th:field="*{productId}" th:value="${form.productId}">
+							<input type="number" th:value="1" id="val" th:field="*{amount}" onchange="checkInputValue()" class="form-control">
+							<button type="button"  class="btn" onclick="increase()">
+								<i class="fa fa-plus"></i>
+							</button>
+
+						</div>
+						<br>
+						<input id="submit" type="submit" class="btn bg-dark text-light">
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+        function decrease() {
+            let val = document.getElementById("val").value;
+            val--;
+            document.getElementById("val").value = val;
+            checkInputValue();
+        }
+
+        function increase() {
+            let val = document.getElementById("val").value;
+            val++;
+            document.getElementById("val").value = val;
+            checkInputValue();
+        }
+        function checkInputValue() {
+            var inputValue = document.getElementById("val").value;
+            var submitButton = document.getElementById("submit");
+            
+            if (inputValue <= 0) {
+              submitButton.disabled = true;
+            } else {
+              submitButton.disabled = false;
+            }
+          }
+    </script>
+</body>
+</html>

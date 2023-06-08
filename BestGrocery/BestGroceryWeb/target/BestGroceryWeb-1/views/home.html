@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/font-awesome.min.css}" rel="stylesheet">
+<link th:href="@{/resources/css/home.css}" rel="stylesheet">
+</head>
+<body>
+
+<nav th:replace="~{fragments/homefrag :: nav}">
+		</nav>
+		<p th:text="${#dates.createNow()}"></p>
+</body>
+</html>
